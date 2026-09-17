@@ -1,0 +1,279 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>For Sree</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,wght@0,400;0,500;0,600;0,700;1,500&family=Work+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --sky: #4fa3d1;
+    --sky-deep: #2f7ba3;
+    --orange: #e0692c;
+    --orange-deep: #b84e1c;
+    --peach: #f7b979;
+    --ink: #3a2b1f;
+    --cream: #fff8ee;
+    --yes-scale: 1;
+  }
+
+  *{ box-sizing: border-box; }
+  html, body{ margin: 0; padding: 0; min-height: 100%; }
+
+  body{
+    font-family: 'Work Sans', sans-serif;
+    color: var(--ink);
+    background:
+      radial-gradient(circle at 15% 10%, #bfe3f588, transparent 45%),
+      radial-gradient(circle at 85% 88%, #ffcf9c8c, transparent 50%),
+      linear-gradient(165deg, #eaf6fc 0%, #fff8ee 48%, #ffedd8 100%);
+    min-height: 100vh;
+    overflow-x: hidden;
+    position: relative;
+  }
+
+  /* ---------- floating drifters (sun / cloud / hearts) ---------- */
+  .petals{ position: fixed; inset: 0; pointer-events: none; z-index: 1; overflow: hidden; }
+  .petal{ position: absolute; top: -8%; opacity: .55; animation: drift linear infinite; }
+  @keyframes drift{
+    0%   { transform: translateY(-10vh) translateX(0) rotate(0deg); }
+    100% { transform: translateY(115vh) translateX(var(--drift, 40px)) rotate(300deg); }
+  }
+
+  /*  */
+
+  .stage{
+    position: relative; z-index: 2; min-height: 100vh;
+    display: flex; align-items: center; justify-content: center;
+    padding: 48px 22px;
+  }
+
+  .scene{ width: min(560px, 100%); text-align: center; }
+
+  .kicker{
+    font-size: 13px; letter-spacing: .04em; color: var(--sky-deep);
+    margin: 0 0 6px; opacity: 0; animation: riseIn .7s ease forwards; animation-delay: .1s;
+  }
+
+  .name{
+    font-family: 'Fraunces', serif; font-weight: 600;
+    font-size: clamp(56px, 15vw, 118px); line-height: 1; margin: 0;
+    background: linear-gradient(100deg, var(--orange-deep) 15%, var(--orange) 55%, var(--sky-deep) 110%);
+    -webkit-background-clip: text; background-clip: text; color: transparent;
+    letter-spacing: .01em;
+    opacity: 0; animation: riseIn .8s ease forwards; animation-delay: .25s;
+  }
+
+  .flourish{
+    width: min(260px, 60%); height: 26px; margin: 8px auto 22px; display: block;
+    opacity: 0; animation: riseIn .6s ease forwards; animation-delay: .65s;
+  }
+  .flourish path{
+    fill: none; stroke: var(--sky); stroke-width: 2.2; stroke-linecap: round;
+    stroke-dasharray: 300; stroke-dashoffset: 300;
+    animation: draw 1.1s ease forwards; animation-delay: .8s;
+  }
+
+  .question{
+    font-family: 'Fraunces', serif; font-style: italic; font-weight: 500;
+    font-size: clamp(24px, 5vw, 34px); color: var(--sky-deep); margin: 0 0 18px;
+    opacity: 0; animation: riseIn .7s ease forwards; animation-delay: .9s;
+  }
+
+  .message{
+    font-size: 16px; line-height: 1.7; color: #5c4630; max-width: 440px; margin: 0 auto 34px;
+    opacity: 0; animation: riseIn .7s ease forwards; animation-delay: 1.05s;
+  }
+
+  .actions{
+    display: flex; gap: 16px; justify-content: center; align-items: center;
+    position: relative; min-height: 64px;
+    opacity: 0; animation: riseIn .7s ease forwards; animation-delay: 1.2s;
+  }
+
+  button{
+    font-family: 'Work Sans', sans-serif; font-weight: 600; font-size: 15px;
+    border: none; cursor: pointer; border-radius: 999px; padding: 15px 30px;
+  }
+
+  .yes-btn{
+    background: linear-gradient(120deg, var(--orange-deep), var(--orange));
+    color: #fff8ee;
+    box-shadow: 0 10px 26px #e0692c40;
+    transform: scale(var(--yes-scale));
+    transition: transform .25s ease, filter .2s ease;
+  }
+  .yes-btn:hover{ filter: brightness(1.06); }
+
+  .no-btn{
+    background: transparent; color: var(--sky-deep);
+    border: 1.5px solid #4fa3d166; position: relative;
+    transition: transform .18s ease;
+  }
+  .no-btn:hover{ background: #ffffff70; }
+
+  .hint{
+    position: absolute; bottom: -34px; left: 0; right: 0;
+    font-size: 12.5px; color: #7a95a8; opacity: 0; transition: opacity .3s ease;
+  }
+  .hint.show{ opacity: 1; }
+
+  @keyframes riseIn{ from{ opacity: 0; transform: translateY(14px); } to{ opacity: 1; transform: translateY(0); } }
+  @keyframes draw{ to{ stroke-dashoffset: 0; } }
+
+  /* ---------- celebration ---------- */
+  .celebrate{ display: none; }
+  .celebrate.show{ display: block; animation: riseIn .6s ease forwards; }
+  .celebrate .big-heart{ font-size: 56px; display: inline-block; animation: beat 1.1s ease-in-out infinite; }
+  @keyframes beat{ 0%, 100% { transform: scale(1); } 50% { transform: scale(1.14); } }
+  .celebrate h2{
+    font-family: 'Fraunces', serif; font-weight: 600;
+    font-size: clamp(32px, 7vw, 48px);
+    background: linear-gradient(100deg, var(--orange-deep), var(--sky-deep));
+    -webkit-background-clip: text; background-clip: text; color: transparent;
+    margin: 14px 0 10px;
+  }
+  .celebrate p{ font-size: 16px; color: #5c4630; max-width: 420px; margin: 0 auto; line-height: 1.7; }
+  .signature{ margin-top: 26px; font-family: 'Fraunces', serif; font-style: italic; color: var(--orange-deep); font-size: 16px; }
+
+  .rising-heart{
+    position: fixed; bottom: -30px; font-size: 20px; z-index: 3;
+    pointer-events: none; animation: rise linear forwards;
+  }
+  @keyframes rise{ to{ transform: translateY(-110vh) translateX(var(--sway, 0px)) rotate(20deg); opacity: 0; } }
+
+  @media (prefers-reduced-motion: reduce){
+    .petal, .rising-heart, .celebrate .big-heart{ animation: none !important; }
+    .kicker, .name, .flourish, .flourish path, .question, .message, .actions, .celebrate{
+      animation: none !important; opacity: 1 !important; stroke-dashoffset: 0 !important;
+    }
+  }
+
+  @media (max-width: 420px){
+    .actions{ flex-direction: column; gap: 14px; }
+    .hint{ bottom: -30px; }
+  }
+</style>
+</head>
+<body>
+
+  <div class="petals" id="petals"></div>
+
+  <main class="stage">
+    <!-- <svg class="hug-bg" viewBox="0 0 200 220" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"> -->
+      <g transform="rotate(-13 70 130)"><rect x="42" y="70" width="56" height="110" rx="28" fill="#e0692c"/></g>
+      <g transform="rotate(13 130 130)"><rect x="102" y="70" width="56" height="110" rx="28" fill="#4fa3d1"/></g>
+      <path d="M118,95 C90,90 68,100 62,125 C58,140 62,150 72,155" fill="none" stroke="#4fa3d1" stroke-width="14" stroke-linecap="round"/>
+      <path d="M82,95 C110,90 132,100 138,125 C142,140 138,150 128,155" fill="none" stroke="#e0692c" stroke-width="14" stroke-linecap="round"/>
+      <circle cx="74" cy="53" r="17" fill="#e0692c"/>
+      <circle cx="126" cy="53" r="17" fill="#4fa3d1"/>
+    </svg>
+
+    <div class="scene" id="scene">
+
+      <div id="question-view">
+        <p class="kicker">💌 a little something for</p>
+        <h1 class="name">Sree</h1>
+
+        <svg class="flourish" viewBox="0 0 260 26" xmlns="http://www.w3.org/2000/svg">
+          <path d="M4 13 C 60 -4, 90 30, 130 13 S 210 -4, 256 13" />
+        </svg>
+
+        <p class="question">Will you be mine? 🥹💫</p>
+        <p class="message">
+          Like the sky just before sunset 🌇, you turn ordinary moments into
+          something I want to keep looking at ☁️🧡. I've been meaning to ask
+          you something, and I'd love nothing more than a yes 💙.
+        </p>
+
+        <div class="actions">
+          <button class="yes-btn" id="yesBtn">Yes, always 🧡</button>
+          <button class="no-btn" id="noBtn">Give me a sec 👀</button>
+          <span class="hint" id="hint">that button's a little shy today 🙈</span>
+        </div>
+      </div>
+
+      <div class="celebrate" id="celebrate">
+        <span class="big-heart">🧡</span>
+        <h2>Yay! That's a yes 🎉</h2>
+        <p>You've just turned a regular day into the best one yet ✨. Thank you for saying yes, sree 🧡💙.</p>
+        <p class="signature">janani with love 💌</p>
+      </div>
+
+    </div>
+  </main>
+
+<script>
+  // ambient floating drifters
+  const petalEmojis = ['🧡','💙','☁️','✨'];
+  const petalHost = document.getElementById('petals');
+  const PETAL_COUNT = window.innerWidth < 480 ? 10 : 18;
+  for (let i = 0; i < PETAL_COUNT; i++) {
+    const p = document.createElement('span');
+    p.className = 'petal';
+    p.textContent = petalEmojis[Math.floor(Math.random() * petalEmojis.length)];
+    p.style.left = Math.random() * 100 + 'vw';
+    p.style.setProperty('--drift', (Math.random() * 80 - 40) + 'px');
+    p.style.animationDuration = (10 + Math.random() * 10) + 's';
+    p.style.animationDelay = (Math.random() * -20) + 's';
+    p.style.fontSize = (14 + Math.random() * 12) + 'px';
+    petalHost.appendChild(p);
+  }
+
+  // the "no" button that gently dodges
+  const noBtn = document.getElementById('noBtn');
+  const yesBtn = document.getElementById('yesBtn');
+  const actions = document.querySelector('.actions');
+  const hint = document.getElementById('hint');
+  let dodges = 0;
+
+  function dodge(){
+    const bounds = actions.getBoundingClientRect();
+    const btnW = noBtn.offsetWidth, btnH = noBtn.offsetHeight;
+    const maxX = Math.max(bounds.width - btnW, 40);
+    const maxY = 46;
+    const x = (Math.random() - 0.5) * maxX;
+    const y = (Math.random() - 0.5) * maxY;
+    noBtn.style.transform = `translate(${x}px, ${y}px)`;
+
+    dodges = Math.min(dodges + 1, 6);
+    document.documentElement.style.setProperty('--yes-scale', String(1 + dodges * 0.035));
+    hint.classList.add('show');
+  }
+
+  noBtn.addEventListener('mouseenter', dodge);
+  noBtn.addEventListener('touchstart', (e) => { e.preventDefault(); dodge(); }, { passive: false });
+  noBtn.addEventListener('click', (e) => { e.preventDefault(); dodge(); });
+
+  // celebration on yes
+  function spawnHearts(){
+    const emojis = ['🧡','💙','✨','☁️'];
+    const count = 26;
+    for (let i = 0; i < count; i++) {
+      setTimeout(() => {
+        const h = document.createElement('span');
+        h.className = 'rising-heart';
+        h.textContent = emojis[Math.floor(Math.random() * emojis.length)];
+        h.style.left = Math.random() * 100 + 'vw';
+        h.style.setProperty('--sway', (Math.random() * 120 - 60) + 'px');
+        h.style.animationDuration = (2.6 + Math.random() * 2) + 's';
+        h.style.fontSize = (16 + Math.random() * 14) + 'px';
+        document.body.appendChild(h);
+        setTimeout(() => h.remove(), 5000);
+      }, i * 90);
+    }
+  }
+
+  yesBtn.addEventListener('click', () => {
+    document.getElementById('question-view').style.display = 'none';
+    document.getElementById('celebrate').classList.add('show');
+    spawnHearts();
+    const burst = setInterval(spawnHearts, 2600);
+    setTimeout(() => clearInterval(burst), 15000);
+  });
+</script>
+
+</body>
+</html>
